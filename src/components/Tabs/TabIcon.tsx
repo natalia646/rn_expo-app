@@ -16,8 +16,8 @@ export const TabIcon: FC<TabIconProperty> = ({ icon, title, focused }) => {
           source={images.highlight}
           className="flex flex-row flex-1 w-full min-w-28  min-h-14 mt-3  items-center justify-center rounded-full overflow-hidden"
         >
-          <Image source={icon} tintColor="#151312" className="size-5" />
-          <Text className="text-base font-semibold">{title}</Text>
+          <Image source={icon} tintColor="#151312" className="size-5 mr-2" />
+          <Text className="text-base font-semibold ">{title}</Text>
         </ImageBackground>
       </>
     );
