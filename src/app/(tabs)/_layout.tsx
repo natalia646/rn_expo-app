@@ -1,23 +1,70 @@
 import { Tabs } from "expo-router";
 
-export default function _layout() {
+import { icons } from "@/constants/icons";
+import { TabIcon } from "@/components/Tabs/TabIcon";
+
+export default function Layout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarStyle: {
+          backgroundColor: "#0f0D23",
+          borderRadius: 50,
+          marginHorizontal: 20,
+          marginBottom: 42,
+          height: 48,
+          position: "absolute",
+          overflow: "hidden",
+          borderWidth: 1,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
-        options={{ title: "Home", headerShown: false }}
-      />{" "}
+        options={{
+          title: "Home",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.home} title="Home" focused={focused} />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="search"
-        options={{ title: "Search", headerShown: false }}
+        options={{
+          title: "Search",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.search} title="Search" focused={focused} />
+          ),
+        }}
       />
       <Tabs.Screen
         name="saved"
-        options={{ title: "Saved", headerShown: false }}
+        options={{
+          title: "Saved",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.save} title="Saved" focused={focused} />
+          ),
+        }}
       />
       <Tabs.Screen
         name="profile"
-        options={{ title: "Profile", headerShown: false }}
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon={icons.person} title="Profile" focused={focused} />
+          ),
+        }}
       />
     </Tabs>
   );
