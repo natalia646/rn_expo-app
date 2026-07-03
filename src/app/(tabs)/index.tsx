@@ -1,12 +1,20 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
 import React from "react";
 import { images } from "@/constants/images";
 import { icons } from "@/constants/icons";
 import { SearchBar } from "@/components/Tabs/SearchBar";
 import { useRouter } from "expo-router";
+import { fetchMovies } from "../../../servises/api";
+import { useFetch } from "../../../servises/useFetch";
 
 export default function Home() {
   const router = useRouter();
+
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError,
+  } = useFetch(() => fetchMovies({ query: "" }));
 
   return (
     <View className="flex-1 bg-primary">
@@ -25,6 +33,8 @@ export default function Home() {
           />
         </View>
       </ScrollView>
+
+      {moviesLoading ? <ActivityIndicator /> : null}
     </View>
   );
 }
