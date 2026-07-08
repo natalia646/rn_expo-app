@@ -9,11 +9,12 @@ import {
 import React from "react";
 import { images } from "@/constants/images";
 import { icons } from "@/constants/icons";
-import { SearchBar } from "@/components/Tabs/SearchBar";
+import { SearchBar } from "@/components/SearchBar";
 import { useRouter } from "expo-router";
 import { fetchMovies } from "../../../servises/api";
 import { useFetch } from "../../../servises/useFetch";
-import { MovieCard } from "@/components/Tabs/MovieCard";
+import { MovieCard } from "@/components/MovieCard";
+import { PageLayout } from "@/components/PageLayout";
 
 export default function Home() {
   const router = useRouter();
@@ -25,34 +26,35 @@ export default function Home() {
   } = useFetch(() => fetchMovies({ query: "" }));
 
   return (
-    <View className="flex-1 bg-primary">
-      <Image source={images.bg} className="w-full absolute z-0" />
-      <ScrollView
-        className="flex-1 px-5"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 10, minHeight: "100%" }}
-      >
-        <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
+    <PageLayout>
+      {moviesLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" className="my-3" />
+      ) : (
+        <FlatList
+          data={movies}
+          renderItem={({ item }) => <MovieCard {...item} />}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={3}
+          columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
+          ListHeaderComponent={
+            <>
+              <View className="w-full flex-row  items-center justify-center mt-20 ">
+                <Image source={icons.logo} className="w-12 h-10" />
+              </View>
 
-        <View className="flex-1 mt-5">
-          <SearchBar
-            onPressIn={() => router.push("/search")}
-            placeholder="Search movies"
-          />
-        </View>
-
-        {moviesLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            data={movies}
-            renderItem={({ item }) => <MovieCard {...item} />}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={3}
-            columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
-          />
-        )}
-      </ScrollView>
-    </View>
+              <View className=" my-5">
+                <SearchBar
+                  placeholder="Search movies..."
+                  onPress={(e) => {
+                    e.preventDefault();
+                    router.push("/search");
+                  }}
+                />
+              </View>
+            </>
+          }
+        />
+      )}
+    </PageLayout>
   );
 }
