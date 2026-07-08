@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 
 import { icons } from "@/constants/icons";
 import { TabIcon } from "@/components/Tabs/TabIcon";
+import React from "react";
 
 export default function Layout() {
   return (
