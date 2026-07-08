@@ -1,8 +1,9 @@
 import { Tabs } from "expo-router";
 
 import { icons } from "@/constants/icons";
-import { TabIcon } from "@/components/Tabs/TabIcon";
+import { TabIcon } from "@/components/TabIcon";
 import React from "react";
+import { View } from "react-native";
 
 export default function Layout() {
   return (
