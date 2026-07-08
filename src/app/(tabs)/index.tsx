@@ -1,4 +1,11 @@
-import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { images } from "@/constants/images";
 import { icons } from "@/constants/icons";
@@ -6,6 +13,7 @@ import { SearchBar } from "@/components/Tabs/SearchBar";
 import { useRouter } from "expo-router";
 import { fetchMovies } from "../../../servises/api";
 import { useFetch } from "../../../servises/useFetch";
+import { MovieCard } from "@/components/Tabs/MovieCard";
 
 export default function Home() {
   const router = useRouter();
@@ -32,9 +40,19 @@ export default function Home() {
             placeholder="Search movies"
           />
         </View>
-      </ScrollView>
 
-      {moviesLoading ? <ActivityIndicator /> : null}
+        {moviesLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            data={movies}
+            renderItem={({ item }) => <MovieCard {...item} />}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={3}
+            columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
+          />
+        )}
+      </ScrollView>
     </View>
   );
 }
