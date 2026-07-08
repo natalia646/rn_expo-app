@@ -71,14 +71,3 @@ interface MovieDetails {
   vote_average: number;
   vote_count: number;
 }
-
-// interface TrendingCardProps {
-//   movie_id: TrendingMovie;
-//   title: string;
-//   poster_url: string;
-//   searchTerm: string;
-//   movie_id: number;
-//   title: string;
-//   count: number;
-//   poster_url: string;
-// }
