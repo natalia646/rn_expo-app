@@ -1,7 +1,11 @@
-import { View } from 'react-native';
+import { PageLayout } from "@/components/PageLayout";
+import React from "react";
+import { View, Text } from "react-native";
 
-export default function saved () {
+export default function Saved() {
   return (
-    <View></View>
+    <PageLayout>
+      <Text>Saved</Text>
+    </PageLayout>
   );
-};
+}

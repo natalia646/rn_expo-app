@@ -1,4 +1,5 @@
 import { images } from "@/constants/images";
+import React from "react";
 import { FC } from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
 
