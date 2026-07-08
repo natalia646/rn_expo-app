@@ -7,7 +7,6 @@ import {
   FlatList,
 } from "react-native";
 import React from "react";
-import { images } from "@/constants/images";
 import { icons } from "@/constants/icons";
 import { SearchBar } from "@/components/SearchBar";
 import { useRouter } from "expo-router";
@@ -16,6 +15,7 @@ import { useFetch } from "../../../servises/useFetch";
 import { MovieCard } from "@/components/MovieCard";
 import { PageLayout } from "@/components/PageLayout";
 import { getTrendingMovies } from "../../../servises/appwriteDb";
+import { TrendingCard } from "@/components/TrendingCard";
 
 export default function Home() {
   const router = useRouter();
@@ -67,10 +67,9 @@ export default function Home() {
               data={trendingMovies}
               ItemSeparatorComponent={() => <View className="w-4" />}
               horizontal
-              renderItem={({ item }) => (
-                <Text className="text-white">{item.title}</Text>
-              )}
+              renderItem={({ item }) => <TrendingCard {...item} />}
               keyExtractor={(item) => item.movie_id.toString()}
+      
             />
           </View>
         )}
