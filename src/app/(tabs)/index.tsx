@@ -15,9 +15,16 @@ import { fetchMovies } from "../../../servises/api";
 import { useFetch } from "../../../servises/useFetch";
 import { MovieCard } from "@/components/MovieCard";
 import { PageLayout } from "@/components/PageLayout";
+import { getTrendingMovies } from "../../../servises/appwriteDb";
 
 export default function Home() {
   const router = useRouter();
+
+  const {
+    data: trendingMovies,
+    loading: trendingLoading,
+    error: trendingError,
+  } = useFetch(getTrendingMovies);
 
   const {
     data: movies,
@@ -27,34 +34,62 @@ export default function Home() {
 
   return (
     <PageLayout>
-      {moviesLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" className="my-3" />
-      ) : (
-        <FlatList
-          data={movies}
-          renderItem={({ item }) => <MovieCard {...item} />}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
-          columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
-          ListHeaderComponent={
-            <>
-              <View className="w-full flex-row  items-center justify-center mt-20 ">
-                <Image source={icons.logo} className="w-12 h-10" />
-              </View>
+      <ScrollView>
+        <View className="w-full flex-row  items-center justify-center mt-20 ">
+          <Image source={icons.logo} className="w-12 h-10" />
+        </View>
 
-              <View className=" my-5">
-                <SearchBar
-                  placeholder="Search movies..."
-                  onPress={(e) => {
-                    e.preventDefault();
-                    router.push("/search");
-                  }}
-                />
-              </View>
-            </>
-          }
-        />
-      )}
+        <View className=" my-5">
+          <SearchBar
+            placeholder="Search movies"
+            onPress={() => router.push("/search")}
+          />
+        </View>
+
+        {(moviesLoading || trendingLoading) && (
+          <ActivityIndicator size="large" color="#0000ff" className="my-3" />
+        )}
+
+        {(moviesError || trendingError) && (
+          <Text className="text-red-500">
+            Error: {moviesError?.message || trendingError?.message}
+          </Text>
+        )}
+
+        {trendingMovies && (
+          <View>
+            <View className="my-3">
+              <Text className="text-white pb-2 font-bold text-2xl ">
+                Trending Movies
+              </Text>
+            </View>
+            <FlatList
+              data={trendingMovies}
+              ItemSeparatorComponent={() => <View className="w-4" />}
+              horizontal
+              renderItem={({ item }) => (
+                <Text className="text-white">{item.title}</Text>
+              )}
+              keyExtractor={(item) => item.movie_id.toString()}
+            />
+          </View>
+        )}
+
+        {movies && (
+          <View className="mt-7">
+            <Text className="text-white pb-2 font-bold text-2xl ">
+              Latest Movies
+            </Text>
+            <FlatList
+              data={movies}
+              renderItem={({ item }) => <MovieCard {...item} />}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={3}
+              columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
+            />
+          </View>
+        )}
+      </ScrollView>
     </PageLayout>
   );
 }
