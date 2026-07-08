@@ -67,9 +67,10 @@ export default function Home() {
               data={trendingMovies}
               ItemSeparatorComponent={() => <View className="w-4" />}
               horizontal
-              renderItem={({ item }) => <TrendingCard {...item} />}
+              renderItem={({ item, index }) => (
+                <TrendingCard {...item} index={index} />
+              )}
               keyExtractor={(item) => item.movie_id.toString()}
-      
             />
           </View>
         )}
