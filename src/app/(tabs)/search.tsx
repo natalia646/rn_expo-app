@@ -6,6 +6,7 @@ import { fetchMovies } from "../../../servises/api";
 import { useFetch } from "../../../servises/useFetch";
 import { icons } from "@/constants/icons";
 import { SearchBar } from "@/components/SearchBar";
+import { updateSearchCount } from "../../../servises/appwriteDb";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,9 +20,9 @@ export default function Search() {
   } = useFetch(() => fetchMovies({ query: searchQuery }), false);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
-        refetch();
+        await refetch();
       } else {
         reset();
       }
@@ -29,6 +30,12 @@ export default function Search() {
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (movies?.length > 0 && movies?.[0]) {
+       updateSearchCount(searchQuery, movies[0]);
+    }
+  }, [movies]);
 
   return (
     <PageLayout>
@@ -75,7 +82,7 @@ export default function Search() {
 
             {!moviesLoading &&
               !moviesError &&
-              searchQuery.trim() &&
+              !searchQuery.trim() &&
               movies?.length > 0 && (
                 <Text className="text-white px-5 my-3">
                   Search results for "{searchQuery}"
