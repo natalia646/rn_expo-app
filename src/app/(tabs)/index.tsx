@@ -55,7 +55,6 @@ export default function Home() {
             Error: {moviesError?.message || trendingError?.message}
           </Text>
         )}
-          </ScrollView>
 
         {trendingMovies && (
           <View>
@@ -86,10 +85,12 @@ export default function Home() {
               renderItem={({ item }) => <MovieCard {...item} />}
               keyExtractor={(item) => item.id.toString()}
               numColumns={3}
+              scrollEnabled={false}
               columnWrapperStyle={{ justifyContent: "space-between", gap: 10 }}
             />
           </View>
         )}
+      </ScrollView>
     </PageLayout>
   );
 }
