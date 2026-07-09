@@ -14,7 +14,13 @@ export const TrendingCard: FC<TrendingCardProps> = ({
   index,
 }) => {
   return (
-    <Link href={`/movies/${movie_id}`} asChild>
+    <Link
+      href={{
+        pathname: "/movies/[id]",
+        params: { id: movie_id },
+      }}
+      asChild
+    >
       <TouchableOpacity>
         <Image
           source={{ uri: posterUrl }}
@@ -22,7 +28,7 @@ export const TrendingCard: FC<TrendingCardProps> = ({
           className="w-32 h-48 rounded-lg"
         />
 
-        <View className="absolute bottom-9 -left-3.5 px-1 py-1 rounded-full">
+        <View className="absolute bottom-1 -left-3.5 px-1 py-1 rounded-full">
           <MaskedView
             maskElement={
               <Text className="font-bold text-6xl text-white">{index + 1}</Text>
