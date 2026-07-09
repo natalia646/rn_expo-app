@@ -42,7 +42,7 @@ export default function Home() {
         <View className=" my-5">
           <SearchBar
             placeholder="Search movies"
-            onPress={() => router.push("/search")}
+            onPress={() => router.navigate("/search")}
           />
         </View>
 
@@ -55,6 +55,7 @@ export default function Home() {
             Error: {moviesError?.message || trendingError?.message}
           </Text>
         )}
+          </ScrollView>
 
         {trendingMovies && (
           <View>
@@ -89,7 +90,6 @@ export default function Home() {
             />
           </View>
         )}
-      </ScrollView>
     </PageLayout>
   );
 }
