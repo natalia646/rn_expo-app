@@ -12,7 +12,13 @@ export const MovieCard: FC<Movie> = ({
   release_date,
 }) => {
   return (
-    <Link href={`/movies/${id}`} asChild>
+    <Link
+      href={{
+        pathname: "/movies/[id]",
+        params: { id: id},
+      }}
+      asChild
+    >
       <TouchableOpacity className="w-[30%] mb-3">
         <Image
           source={{
